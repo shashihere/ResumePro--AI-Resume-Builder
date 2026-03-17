@@ -1,0 +1,128 @@
+@import "tailwindcss";
+
+@theme {
+    /* Grand Scale Palette */
+    --color-primary: #0B132B;
+    /* Deep Navy */
+    --color-secondary: #FFC300;
+    /* Marigold Gold Accent */
+    --color-secondary-hover: #E6B000;
+
+    --color-background-start: #0B132B;
+    --color-background-end: #10172A;
+
+    --color-text-main: #EAEAEA;
+    --color-text-muted: #8892B0;
+
+    --color-card-bg: #111b33;
+    /* Distinct navy for cards */
+    --color-input-bg: #1c2541;
+    /* Slightly lighter input */
+
+    /* Typography */
+    --font-sans: 'Inter', sans-serif;
+    --font-heading: 'Poppins', sans-serif;
+
+    /* Shadows */
+    --shadow-grand: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 50px rgba(0, 0, 0, 0.2);
+    --shadow-float: 0 20px 40px rgba(0, 0, 0, 0.4);
+    --shadow-glow: 0 0 15px rgba(255, 195, 0, 0.3);
+}
+
+@layer base {
+    body {
+        background: linear-gradient(180deg, var(--color-background-start) 0%, var(--color-background-end) 100%);
+        min-height: 100vh;
+        font-family: var(--font-sans);
+        color: var(--color-text-main);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: var(--font-heading);
+    }
+}
+
+@layer components {
+
+    /* Grand Buttons */
+    .btn {
+        @apply px-6 py-3 rounded-lg font-bold transition-all duration-300 cursor-pointer flex items-center justify-center gap-2;
+    }
+
+    .btn-primary {
+        @apply bg-secondary text-black hover:bg-secondary-hover shadow-lg hover:shadow-glow transform hover:-translate-y-0.5;
+    }
+
+    .btn-pill {
+        @apply rounded-full px-8 py-4 text-lg;
+    }
+
+    /* Grand Cards */
+    .card {
+        @apply bg-card-bg rounded-xl border border-white/5 backdrop-blur-sm transition-all duration-300;
+    }
+
+    .card-hover {
+        @apply hover:-translate-y-2 hover:shadow-grand border-transparent hover:border-secondary/30;
+    }
+
+    /* Grand Inputs */
+    .input {
+        @apply w-full p-4 rounded-lg bg-gray-100 border-none text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-secondary outline-none transition-all shadow-inner;
+    }
+
+    .input-dark {
+        @apply bg-input-bg text-white placeholder-gray-500 border border-transparent focus:border-secondary;
+    }
+}
+
+/* --- PRINT RULES (Native PDF Export) --- */
+@media print {
+
+    /* Hide everything by default (UI, sidebars, navbar) */
+    body * {
+        visibility: hidden;
+    }
+
+    /* Except the resume container and its children */
+    #resume-preview,
+    #resume-preview * {
+        visibility: visible;
+    }
+
+    /* Position the resume perfectly for A4 print */
+    #resume-preview {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        box-shadow: none !important;
+        transform: none !important;
+        /* Reset scaling */
+        background: white !important;
+        /* Ensure white bg */
+        color: black !important;
+    }
+
+    /* Disable background colors for the page itself to save ink/ensure clean print */
+    body {
+        background: white !important;
+        color: black !important;
+        overflow: visible !important;
+    }
+
+    /* Ensure no weird scrollbars or layout shifts */
+    @page {
+        size: auto;
+        margin: 0mm;
+    }
+}
