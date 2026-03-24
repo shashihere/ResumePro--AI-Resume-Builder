@@ -15,8 +15,8 @@ import { ToastProvider } from './context/ToastContext';
 
 function App() {
     useEffect(() => {
-        // Connect to backend
-        const socket = io('http://localhost:5000')
+        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+        const socket = io(API_URL);
 
         socket.on('connect', () => {
             console.log('Connected to socket server with ID:', socket.id)

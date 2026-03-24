@@ -4,6 +4,8 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { Check, Shield, FileText, AlertCircle } from 'lucide-react'
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 function AdminDashboard() {
     const navigate = useNavigate()
     const { user } = useSelector((state) => state.auth)
@@ -21,10 +23,10 @@ function AdminDashboard() {
                 const config = {
                     headers: { Authorization: `Bearer ${user.token}` }
                 }
-                const userRes = await axios.get('http://localhost:5000/api/admin/users', config)
+                const userRes = await axios.get(`${API_URL}/api/admin/users`, config)
                 setUsers(userRes.data)
 
-                const logRes = await axios.get('http://localhost:5000/api/admin/logs', config)
+                const logRes = await axios.get(`${API_URL}/api/admin/logs`, config)
                 setLogs(logRes.data)
             } catch (error) {
                 console.error(error)
@@ -38,7 +40,7 @@ function AdminDashboard() {
             const config = {
                 headers: { Authorization: `Bearer ${user.token}` }
             }
-            await axios.put(`http://localhost:5000/api/admin/validate/${id}`, {}, config)
+            await axios.put(`${API_URL}/api/admin/validate/${id}`, {}, config)
             setUsers(users.map(u => u._id === id ? { ...u, isVerified: true } : u))
         } catch (error) {
             console.error(error)

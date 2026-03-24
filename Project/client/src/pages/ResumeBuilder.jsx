@@ -12,6 +12,8 @@ import ModernLayout from '../components/resume-layouts/ModernLayout'
 
 import { useToast } from '../context/ToastContext';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 function ResumeBuilder() {
     const location = useLocation()
     const navigate = useNavigate()
@@ -96,7 +98,7 @@ function ResumeBuilder() {
             if (!token) return;
             const config = { headers: { Authorization: `Bearer ${token}` } }
             // Ensure formatting matches backend expectation or use mixed
-            await axios.put('http://localhost:5000/api/resumes/autosave', { _id: activeResumeId, ...formData, visualConfig, templateId }, config)
+            await axios.put(`${API_URL}/api/resumes/autosave`, { _id: activeResumeId, ...formData, visualConfig, templateId }, config)
             setSaveStatus('Saved')
         } catch (err) {
             console.error(err); setSaveStatus('Error')

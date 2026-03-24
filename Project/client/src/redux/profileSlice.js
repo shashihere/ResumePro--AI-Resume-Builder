@@ -16,7 +16,8 @@ export const getMyProfile = createAsyncThunk('profile/getMe', async (_, thunkAPI
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         }
-        const response = await axios.get('http://localhost:5000/api/profile/me', config)
+        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+        const response = await axios.get(`${API_URL}/api/profile/me`, config)
         return response.data
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
